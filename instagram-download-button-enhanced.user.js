@@ -2,7 +2,7 @@
 // @name         Instagram Download Button (Enhanced)
 // @name:zh-CN   Instagram 下载按钮（增强版）
 // @namespace    https://github.com/zed76r/Instagram_Download_Button
-// @version      2.1.3
+// @version      2.1.4
 // @description  Download or open media from Instagram posts, reels and stories.
 // @description:zh-CN 下载或打开 Instagram 帖子、Reels 和快拍中的媒体。
 // @author       ZhiYu (original); zed76r (fork maintainer)
@@ -210,7 +210,7 @@ SOFTWARE.
     if (!((r.height <= 100 && r.width >= 90) || (r.width <= 140 && r.height >= 100))) return false;
     const icons = ['like', 'comment', 'share', 'repost', 'save']
       .map(kind => actionIcon(bar, kind));
-    if (!icons[0] || !icons[1] || !icons.slice(2).some(Boolean)) return false;
+    if (!icons[0] || icons.slice(1).filter(Boolean).length < 2) return false;
     // Each action must occupy its own cell. Never append inside Save or a comment.
     const cells = icons.filter(Boolean).map(icon => closestDirectChild(bar, icon));
     if (cells.some(cell => !cell) || new Set(cells).size < 3) return false;
@@ -219,8 +219,8 @@ SOFTWARE.
 
   function findActionBars(root = document) {
     const bars = new Set();
-    const seeds = [ACTION_ICONS.comment,
-      ...ACTION_LABELS.comment.map(label => `[aria-label="${label}"]`)].join(',');
+    const seeds = [ACTION_ICONS.like, ACTION_ICONS.unlike,
+      ...ACTION_LABELS.like.map(label => `[aria-label="${label}"]`)].join(',');
     for (const icon of root.querySelectorAll(seeds)) {
       if (!visible(icon.closest('svg') || icon)) continue;
       const scope = icon.closest('article, [role="dialog"]') ||
