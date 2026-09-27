@@ -1,4 +1,19 @@
 # Instagram Download Button
+
+## Enhanced fork / 增强版分支
+
+This is [zed76r's fork](https://github.com/zed76r/Instagram_Download_Button) of [ZhiYu's original project](https://github.com/y252328/Instagram_Download_Button). The enhanced userscript is [`instagram-download-button-enhanced.user.js`](instagram-download-button-enhanced.user.js); the upstream `instagram-dl.user.js` is retained for reference.
+
+本分支基于 ZhiYu 的原项目。增强版脚本修复下载按钮误触收藏、按钮跑进评论区等问题，并为帖子、Reels 和快拍提供打开及下载按钮。
+
+- [Install the enhanced script](https://raw.githubusercontent.com/zed76r/Instagram_Download_Button/master/instagram-download-button-enhanced.user.js) with a userscript manager. It is intended for Tampermonkey on Chrome/Edge and Userscripts on Safari.
+- The script retains the original author's credit and full MIT notice. The repository's [`LICENSE`](LICENSE) also applies.
+- The interface has been checked in a Chromium fixture and the media handling has automated tests. Real Instagram pages and Safari Userscripts have not yet been verified end to end.
+
+The documentation below is from the upstream project and describes the original `instagram-dl.user.js`; its feature and compatibility claims may not apply to the enhanced script.
+
+---
+
 [Github](https://github.com/y252328/Instagram_Download_Button), [Greasy Fork](https://greasyfork.org/en/scripts/406535-instagram-download-button) ~~, [OpenUserJS](https://openuserjs.org/scripts/y252328/Instagram_Download_Button)~~
 
 ##  In the future, I will focus on fixing the bugs that happen in my environment if I have the free time
