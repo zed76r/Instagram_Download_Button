@@ -8,7 +8,8 @@ This is [zed76r's fork](https://github.com/zed76r/Instagram_Download_Button) of 
 
 - [Install the enhanced script](https://raw.githubusercontent.com/zed76r/Instagram_Download_Button/master/instagram-download-button-enhanced.user.js) with a userscript manager. It is intended for Tampermonkey on Chrome/Edge and Userscripts on Safari.
 - The script retains the original author's credit and full MIT notice. The repository's [`LICENSE`](LICENSE) also applies.
-- The interface has been checked in a Chromium fixture and the media handling has automated tests. Real Instagram pages and Safari Userscripts have not yet been verified end to end.
+- Version 2.1.5 resolves video stories whose URL has no media ID and whose player uses a blob URL. Safari Userscripts has been verified by downloading such a story as a complete MP4 with video and audio.
+- Run the action-bar and story-media regression checks with `node --test action-bar.test.cjs story-media.test.cjs`. This Safari check does not establish acceptance for every post, story, or other browser.
 
 The documentation below is from the upstream project and describes the original `instagram-dl.user.js`; its feature and compatibility claims may not apply to the enhanced script.
 
