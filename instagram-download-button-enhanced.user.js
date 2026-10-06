@@ -1,9 +1,25 @@
 // ==UserScript==
 // @name         Instagram Download Button (Enhanced)
+// @name:zh-TW   Instagram 下載按鈕（增強版）
+// @name:ja      Instagram ダウンロードボタン（拡張版）
+// @name:ko      Instagram 다운로드 버튼 (개선판)
+// @name:es      Botón de descarga para Instagram (mejorado)
+// @name:fr      Bouton de téléchargement Instagram (amélioré)
+// @name:de      Instagram-Download-Schaltfläche (erweitert)
+// @name:pt-BR   Botão de download do Instagram (aprimorado)
+// @name:ru      Кнопка скачивания Instagram (улучшенная)
 // @name:zh-CN   Instagram 下载按钮（增强版）
 // @namespace    https://github.com/zed76r/Instagram_Download_Button
-// @version      2.1.5
+// @version      2.1.6
 // @description  Download or open media from Instagram posts, reels and stories.
+// @description:zh-TW 下載或開啟 Instagram 貼文、Reels 和限時動態中的媒體。
+// @description:ja Instagram の投稿、リール、ストーリーズのメディアをダウンロードまたは開きます。
+// @description:ko Instagram 게시물, 릴스, 스토리의 미디어를 다운로드하거나 엽니다.
+// @description:es Descarga o abre medios de publicaciones, Reels e historias de Instagram.
+// @description:fr Téléchargez ou ouvrez les médias des publications, Reels et stories Instagram.
+// @description:de Medien aus Instagram-Beiträgen, Reels und Storys herunterladen oder öffnen.
+// @description:pt-BR Baixe ou abra mídias de publicações, Reels e stories do Instagram.
+// @description:ru Скачивайте или открывайте медиа из публикаций, Reels и историй Instagram.
 // @description:zh-CN 下载或打开 Instagram 帖子、Reels 和快拍中的媒体。
 // @author       ZhiYu (original); zed76r (fork maintainer)
 // @match        https://www.instagram.com/*
