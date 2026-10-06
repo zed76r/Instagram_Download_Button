@@ -2,7 +2,7 @@
 // @name         Instagram Download Button (Enhanced)
 // @name:zh-CN   Instagram 下载按钮（增强版）
 // @namespace    https://github.com/zed76r/Instagram_Download_Button
-// @version      2.1.4
+// @version      2.1.5
 // @description  Download or open media from Instagram posts, reels and stories.
 // @description:zh-CN 下载或打开 Instagram 帖子、Reels 和快拍中的媒体。
 // @author       ZhiYu (original); zed76r (fork maintainer)
@@ -1170,15 +1170,94 @@ SOFTWARE.
     };
   }
 
+  function storyVideoIdFromFiber(video) {
+    if (video?.tagName !== 'VIDEO') {
+      return null;
+    }
+
+    const fiberKey = Object.keys(video).find(key =>
+      key.startsWith('__reactFiber$')
+    );
+    let fiber = fiberKey ? video[fiberKey] : null;
+
+    for (let depth = 0; fiber && depth < 32; depth++, fiber = fiber.return) {
+      const mediaId =
+        fiber.memoizedProps?.coreVideoPlayerMetaData?.videoFBID;
+
+      if (typeof mediaId === 'string' && /^[0-9]+$/.test(mediaId)) {
+        return mediaId;
+      }
+    }
+
+    return null;
+  }
+
+  function storyVideoIdFromPage(video) {
+    if (video?.tagName !== 'VIDEO') {
+      return null;
+    }
+
+    const targetAttribute = 'data-igdl26-story-target';
+    const resultAttribute = 'data-igdl26-story-id';
+    const marker = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    let script = null;
+
+    try {
+      video.setAttribute(targetAttribute, marker);
+
+      script = document.createElement('script');
+      script.nonce = document.querySelector('script[nonce]')?.nonce || '';
+      script.textContent = `(() => {
+        const marker = ${JSON.stringify(marker)};
+        const video = [...document.querySelectorAll('video[${targetAttribute}]')]
+          .find(element => element.getAttribute('${targetAttribute}') === marker);
+        if (!video) return;
+        const mediaId = (${storyVideoIdFromFiber.toString()})(video);
+        if (mediaId) video.setAttribute('${resultAttribute}', mediaId);
+      })();`;
+
+      document.documentElement.appendChild(script);
+
+      const mediaId = video.getAttribute(resultAttribute);
+      return typeof mediaId === 'string' && /^[0-9]+$/.test(mediaId)
+        ? mediaId
+        : null;
+    } catch {
+      return null;
+    } finally {
+      script?.remove();
+      video.removeAttribute(targetAttribute);
+      video.removeAttribute(resultAttribute);
+    }
+  }
+
   async function resolveStoryMedia() {
     const match =
       location.pathname.match(
         STORY_MEDIA_RE
       );
 
-    const mediaId =
+    let mediaId =
       match?.[1] ||
       null;
+
+    if (!mediaId) {
+      const visibleMedia =
+        findVisibleMedia(
+          document,
+          true
+        );
+
+      mediaId =
+        storyVideoIdFromFiber(visibleMedia) ||
+        storyVideoIdFromPage(visibleMedia);
+    }
+
+    const fallback =
+      domMediaUrl(
+        document,
+        true
+      );
 
     const info =
       await fetchInfo(
@@ -1195,10 +1274,7 @@ SOFTWARE.
       itemUrl(
         item
       ) ||
-      domMediaUrl(
-        document,
-        true
-      );
+      fallback;
 
     if (!url) {
       throw new Error(
